@@ -1,6 +1,8 @@
 package guru.springframework.services;
 
 
+import guru.springframework.converters.RecipeCommandToRecipe;
+import guru.springframework.converters.RecipeToRecipeCommand;
 import guru.springframework.domain.Recipe;
 import guru.springframework.repositories.RecipeRepository;
 import org.junit.Before;
@@ -21,17 +23,23 @@ import static org.mockito.Mockito.*;
  */
 public class RecipeServiceImplTest {
 
-    RecipeServiceImpl recipeService;
+    private RecipeServiceImpl recipeService;
 
     @Mock
-    RecipeRepository recipeRepository;
+    private RecipeRepository recipeRepository;
 
+    @Mock
+    private RecipeCommandToRecipe recipeCommandToRecipeConverter;
+
+    @Mock
+    private RecipeToRecipeCommand recipeToRecipeCommandConverter;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        recipeService = new RecipeServiceImpl(recipeRepository);
+        recipeService = new RecipeServiceImpl(recipeRepository,
+                recipeCommandToRecipeConverter, recipeToRecipeCommandConverter);
     }
 
     @Test
